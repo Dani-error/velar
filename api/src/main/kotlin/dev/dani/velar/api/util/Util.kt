@@ -34,3 +34,9 @@ fun <T> wrap(block: () -> T): () -> T = {
         throw IllegalStateException(e)
     }
 }
+
+fun Double.floor(): Int {
+    val casted = this.toInt()
+
+    return if (this < casted) casted - 1 else casted
+}
