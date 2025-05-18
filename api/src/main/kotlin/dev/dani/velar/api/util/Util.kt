@@ -1,5 +1,8 @@
 package dev.dani.velar.api.util
 
+import java.util.concurrent.Callable
+import java.util.function.Supplier
+
 
 /*
  * Project: velar
@@ -22,4 +25,12 @@ inline fun <reified T> safeEquals(
 
     // apply custom checker
     return checker(original, compare)
+}
+
+fun <T> wrap(block: () -> T): () -> T = {
+    try {
+        block()
+    } catch (e: Exception) {
+        throw IllegalStateException(e)
+    }
 }
