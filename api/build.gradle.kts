@@ -1,0 +1,3 @@
+dependencies {
+    // Example: API dependencies
+}
