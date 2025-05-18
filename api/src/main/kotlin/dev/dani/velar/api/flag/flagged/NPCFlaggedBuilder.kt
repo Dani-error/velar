@@ -1,4 +1,6 @@
-package dev.dani.velar.api.flag
+package dev.dani.velar.api.flag.flagged
+
+import dev.dani.velar.api.flag.NPCFlag
 
 
 /*
