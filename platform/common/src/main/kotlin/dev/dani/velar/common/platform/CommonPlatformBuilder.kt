@@ -15,17 +15,17 @@ import dev.dani.velar.common.CommonNPCTracker
  */
 abstract class CommonPlatformBuilder<W, P, I, E> : Platform.Builder<W, P, I, E> {
 
-    private var extension: E? = null
-    private var logger: PlatformLogger? = null
-    private var debug: Boolean = DEFAULT_DEBUG
-    private var eventManager: NPCEventManager? = null
-    private var npcTracker: NPCTracker<W, P, I, E>? = null
-    private var profileResolver: ProfileResolver? = null
-    private var taskManager: PlatformTaskManager? = null
-    private var versionAccessor: PlatformVersionAccessor? = null
-    private var worldAccessor: PlatformWorldAccessor<W>? = null
-    private var packetAdapter: PlatformPacketAdapter<W, P, I, E>? = null
-    private var actionControllerDecorator: ((NPCActionController.Builder?) -> Unit)? = null
+    protected var extension: E? = null
+    protected var logger: PlatformLogger? = null
+    protected var debug: Boolean = DEFAULT_DEBUG
+    protected var eventManager: NPCEventManager? = null
+    protected var npcTracker: NPCTracker<W, P, I, E>? = null
+    protected var profileResolver: ProfileResolver? = null
+    protected var taskManager: PlatformTaskManager? = null
+    protected var versionAccessor: PlatformVersionAccessor? = null
+    protected var worldAccessor: PlatformWorldAccessor<W>? = null
+    protected var packetAdapter: PlatformPacketAdapter<W, P, I, E>? = null
+    protected var actionControllerDecorator: ((NPCActionController.Builder?) -> Unit)? = null
 
     override fun debug(debug: Boolean): Platform.Builder<W, P, I, E> {
         this.debug = debug
