@@ -14,7 +14,7 @@ subprojects {
     group = "dev.dani"
     version = "1.0.0-SNAPSHOT"
 
-    val targetJavaVersion = 8
+    val targetJavaVersion = 21
 
     tasks.withType<JavaCompile>().configureEach {
         if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible) {

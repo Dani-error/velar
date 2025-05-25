@@ -25,8 +25,8 @@ fun interface OutboundPacket<W, P, I, E> {
         players.forEach(Consumer { player: P -> this.schedule(player, npc) })
     }
 
-    fun toSpecific(targetNpc: NPC<W, P, I, E>): NPCSpecificOutboundPacket<W, P, I, E> {
-        return NPCSpecificOutboundPacket.fromOutboundPacket(targetNpc, this)
+    fun toSpecific(targetNPC: NPC<W, P, I, E>): NPCSpecificOutboundPacket<W, P, I, E> {
+        return NPCSpecificOutboundPacket.fromOutboundPacket(targetNPC, this)
     }
 
 }

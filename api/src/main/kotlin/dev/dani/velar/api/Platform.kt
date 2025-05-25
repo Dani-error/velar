@@ -25,7 +25,7 @@ interface Platform<W, P, I, E> {
     val packetFactory: PlatformPacketAdapter<W, P, I, E>
     val actionController: NPCActionController?
 
-    fun newNpcBuilder(): NPC.Builder<W, P, I, E>
+    fun newNPCBuilder(): NPC.Builder<W, P, I, E>
 
     interface Builder<W, P, I, E> {
         fun debug(debug: Boolean): Builder<W, P, I, E>
