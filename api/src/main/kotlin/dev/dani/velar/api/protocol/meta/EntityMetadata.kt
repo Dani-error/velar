@@ -24,6 +24,7 @@ interface DefaultEntityMetadata {
 
     companion object {
 
+        // https://wiki.vg/Entity_metadata#Entity - see index 0
         val ENTITY_STATUS = EntityMetadataFactory.metaFactoryBuilder<Collection<EntityStatus>, Byte>()
             .baseIndex(0)
             .type(Byte::class.java)
@@ -57,6 +58,7 @@ interface DefaultEntityMetadata {
                 return@inputConverter entryMask
             }.build()
 
+        // https://wiki.vg/Entity_metadata#Entity - see index 0 and 6
         val SNEAKING = EntityMetadataFactory.metaFactoryBuilder<Boolean, Byte>()
             .baseIndex(0)
             .type(Byte::class.java)
@@ -69,6 +71,7 @@ interface DefaultEntityMetadata {
                 .build())
             .build()
 
+        // https://wiki.vg/Entity_metadata#Player - see index 10
         val SKIN_LAYERS = EntityMetadataFactory.metaFactoryBuilder<Boolean, Byte>()
             .baseIndex(10)
             .type(Byte::class.java)
