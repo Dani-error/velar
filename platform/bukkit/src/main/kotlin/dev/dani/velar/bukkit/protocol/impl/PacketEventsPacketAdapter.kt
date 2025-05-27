@@ -99,7 +99,7 @@ object PacketEventsPacketAdapter : PlatformPacketAdapter<World, Player, ItemStac
             newValue = converted.value
         }
 
-        val lazyType = Lazy.ENTITY_DATA_TYPE_LOOKUP[newType] as EntityDataType<Any?>
+        val lazyType: EntityDataType<Any?> = Lazy.ENTITY_DATA_TYPE_LOOKUP[newType] as EntityDataType<Any?>
         return EntityData(index, lazyType, newValue)
     }
 
@@ -464,11 +464,11 @@ object PacketEventsPacketAdapter : PlatformPacketAdapter<World, Player, ItemStac
 
         val ENTITY_DATA_TYPE_LOOKUP: Map<Type, EntityDataType<*>> by lazy {
             mapOf(
-                Byte::class.java to EntityDataTypes.BYTE,
-                Int::class.java to EntityDataTypes.INT,
-                Float::class.java to EntityDataTypes.FLOAT,
-                Boolean::class.java to EntityDataTypes.BOOLEAN,
-                String::class.java to EntityDataTypes.STRING,
+                java.lang.Byte::class.java to EntityDataTypes.BYTE,
+                java.lang.Integer::class.java to EntityDataTypes.INT,
+                java.lang.Float::class.java to EntityDataTypes.FLOAT,
+                java.lang.Boolean::class.java to EntityDataTypes.BOOLEAN,
+                java.lang.String::class.java to EntityDataTypes.STRING,
                 OPTIONAL_CHAT_COMPONENT_TYPE to EntityDataTypes.OPTIONAL_ADV_COMPONENT,
                 com.github.retrooper.packetevents.protocol.entity.pose.EntityPose::class.java to EntityDataTypes.ENTITY_POSE
             )

@@ -66,7 +66,7 @@ class CommonNPCBuilder<W, P, I, E>(private val platform: Platform<W, P, I, E>) :
             }
     }
 
-    override fun npcSettings(decorator: (NPCSettings.Builder<P>?) -> Unit): NPC.Builder<W, P, I, E> {
+    override fun npcSettings(decorator: (NPCSettings.Builder<P>) -> Unit): NPC.Builder<W, P, I, E> {
         // build the npc settings
         val builder: NPCSettings.Builder<P> = CommonNPCSettingsBuilder()
         decorator(builder)

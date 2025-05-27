@@ -69,7 +69,7 @@ interface NPC<W, P, I, E> : NPCFlaggedObject {
             profile: Profile
         ): CompletableFuture<Builder<W, P, I, E>>
 
-        fun npcSettings(decorator: (NPCSettings.Builder<P>?) -> Unit): Builder<W, P, I, E>
+        fun npcSettings(decorator: (NPCSettings.Builder<P>) -> Unit): Builder<W, P, I, E>
 
         fun build(): NPC<W, P, I, E>
 

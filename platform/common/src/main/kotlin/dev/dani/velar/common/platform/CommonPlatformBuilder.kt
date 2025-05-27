@@ -87,10 +87,12 @@ abstract class CommonPlatformBuilder<W, P, I, E> : Platform.Builder<W, P, I, E> 
     override fun build(): Platform<W, P, I, E> {
         // validate that the required values are present
         requireNotNull(this.extension) { "extension" }
-        requireNotNull(this.logger) { "logger" }
 
         // let the downstream builder set all default values if required
         this.prepareBuild()
+
+        // validate that the required values are present
+        requireNotNull(this.logger) { "logger" }
 
         // use the default profile resolver if no specific one was specified
         if (this.profileResolver == null) {

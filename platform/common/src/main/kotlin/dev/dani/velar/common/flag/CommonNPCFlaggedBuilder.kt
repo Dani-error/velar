@@ -21,7 +21,7 @@ abstract class CommonNPCFlaggedBuilder<B> : NPCFlaggedBuilder<B> {
 
         // check if the flag value is acceptable
         if (flag.accepts(value)) {
-            this.flags[flag] = Optional.ofNullable<T>(value)
+            this.flags[flag] = value
             return this as B
         }
 
