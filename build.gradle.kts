@@ -1,3 +1,6 @@
+import java.net.URI
+import java.net.URL
+
 plugins {
     kotlin("jvm") version "2.1.21" apply false
 }
@@ -33,6 +36,17 @@ subprojects {
                     groupId = "${project.group}.velar"
                     artifactId = project.name
                     version = project.version.toString()
+                }
+            }
+
+            repositories {
+                maven {
+                    name = "GitHubPackages"
+                    url = URI("https://maven.pkg.github.com/Dani-error/velar")
+                    credentials {
+                        username = System.getenv("GITHUB_ACTOR")
+                        password = System.getenv("GITHUB_TOKEN")
+                    }
                 }
             }
         }
