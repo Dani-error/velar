@@ -26,7 +26,7 @@ dependencies {
 
     implementation("com.github.retrooper:packetevents-spigot:2.8.0")
     implementation("io.papermc:paperlib:1.0.8")
-    implementation("io.leangen.geantyref:geantyref:1.3.16")
+    implementation("io.leangen.geantyref:geantyref:2.0.1")
 
     compileOnly("com.github.dmulloy2:ProtocolLib:2c0d632dc2")
 
