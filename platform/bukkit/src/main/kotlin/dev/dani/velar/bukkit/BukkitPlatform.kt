@@ -1,8 +1,8 @@
 package dev.dani.velar.bukkit
 
 import dev.dani.velar.api.NPCActionController
-import dev.dani.velar.api.Platform
-import dev.dani.velar.api.log.PlatformLogger
+import dev.dani.velar.api.platform.Platform
+import dev.dani.velar.api.platform.log.PlatformLogger
 import dev.dani.velar.bukkit.BukkitProfileResolver.profileResolver
 import dev.dani.velar.bukkit.BukkitVersionAccessor.versionAccessor
 import dev.dani.velar.bukkit.BukkitWorldAccessor.worldAccessor

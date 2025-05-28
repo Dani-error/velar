@@ -15,8 +15,8 @@ import com.comphenix.protocol.wrappers.EnumWrappers.EntityUseAction
 import com.comphenix.protocol.wrappers.WrappedDataWatcher.WrappedDataWatcherObject
 import com.google.common.collect.Lists
 import dev.dani.velar.api.NPC
-import dev.dani.velar.api.Platform
-import dev.dani.velar.api.PlatformVersionAccessor
+import dev.dani.velar.api.platform.Platform
+import dev.dani.velar.api.platform.PlatformVersionAccessor
 import dev.dani.velar.api.event.InteractNPCEvent
 import dev.dani.velar.api.protocol.Component
 import dev.dani.velar.api.protocol.OutboundPacket

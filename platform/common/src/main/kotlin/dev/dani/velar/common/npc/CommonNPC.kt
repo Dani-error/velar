@@ -4,8 +4,8 @@ package dev.dani.velar.common.npc
 
 import dev.dani.velar.api.NPC
 import dev.dani.velar.api.NPCTracker
-import dev.dani.velar.api.Platform
-import dev.dani.velar.api.Position
+import dev.dani.velar.api.platform.Platform
+import dev.dani.velar.api.util.Position
 import dev.dani.velar.api.flag.NPCFlag
 import dev.dani.velar.api.profile.Profile
 import dev.dani.velar.api.protocol.NPCSpecificOutboundPacket

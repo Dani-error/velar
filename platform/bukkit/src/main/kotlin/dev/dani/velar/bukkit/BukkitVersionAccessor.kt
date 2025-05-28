@@ -1,6 +1,6 @@
 package dev.dani.velar.bukkit
 
-import dev.dani.velar.api.PlatformVersionAccessor
+import dev.dani.velar.api.platform.PlatformVersionAccessor
 import io.papermc.lib.PaperLib
 
 /*

@@ -1,7 +1,7 @@
 package dev.dani.velar.api.profile.resolver
 
 import dev.dani.velar.api.profile.Profile
-import dev.dani.velar.api.profile.resolver.impl.DefaultProfileResolverCached
+import dev.dani.velar.api.profile.resolver.impl.ProfileResolverCached
 import dev.dani.velar.api.profile.resolver.impl.ProfileResolverMojang
 import java.util.UUID
 import java.util.concurrent.CompletableFuture
@@ -20,7 +20,7 @@ fun interface ProfileResolver {
 
         fun mojang(): ProfileResolver = ProfileResolverMojang
 
-        fun caching(delegate: ProfileResolver): Cached = DefaultProfileResolverCached(delegate)
+        fun caching(delegate: ProfileResolver): Cached = ProfileResolverCached(delegate)
 
     }
 

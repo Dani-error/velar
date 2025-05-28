@@ -1,8 +1,8 @@
 package dev.dani.velar.common.npc
 
 import dev.dani.velar.api.NPC
-import dev.dani.velar.api.Platform
-import dev.dani.velar.api.Position
+import dev.dani.velar.api.platform.Platform
+import dev.dani.velar.api.util.Position
 import dev.dani.velar.api.profile.Profile
 import dev.dani.velar.api.profile.resolver.ProfileResolver
 import dev.dani.velar.api.settings.NPCSettings

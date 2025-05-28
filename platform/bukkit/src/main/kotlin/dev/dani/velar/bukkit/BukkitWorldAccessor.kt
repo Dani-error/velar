@@ -1,6 +1,6 @@
 package dev.dani.velar.bukkit
 
-import dev.dani.velar.api.PlatformWorldAccessor
+import dev.dani.velar.api.platform.PlatformWorldAccessor
 import io.papermc.lib.PaperLib
 import org.bukkit.Bukkit
 import org.bukkit.NamespacedKey

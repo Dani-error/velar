@@ -1,7 +1,10 @@
-package dev.dani.velar.api
+package dev.dani.velar.api.platform
 
+import dev.dani.velar.api.NPC
+import dev.dani.velar.api.NPCActionController
+import dev.dani.velar.api.NPCTracker
 import dev.dani.velar.api.event.NPCEventManager
-import dev.dani.velar.api.log.PlatformLogger
+import dev.dani.velar.api.platform.log.PlatformLogger
 import dev.dani.velar.api.profile.resolver.ProfileResolver
 import dev.dani.velar.api.protocol.PlatformPacketAdapter
 

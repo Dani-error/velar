@@ -1,6 +1,6 @@
 package dev.dani.velar.api.event
 
-import dev.dani.velar.api.log.PlatformLogger
+import dev.dani.velar.api.platform.log.PlatformLogger
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.CopyOnWriteArrayList
 

@@ -13,7 +13,7 @@ import java.util.concurrent.CompletableFuture
  */
 private const val ENTRY_KEEP_ALIVE_TIME = 3 * 60 * 60 * 1000L // 3h in ms
 
-class DefaultProfileResolverCached(private val delegate: ProfileResolver) : ProfileResolver.Cached {
+class ProfileResolverCached(private val delegate: ProfileResolver) : ProfileResolver.Cached {
 
     private val nameToUniqueIdCache = mutableMapOf<String, CacheEntry<UUID>>()
     private val uuidToProfileCache = mutableMapOf<UUID, CacheEntry<Profile.Resolved>>()

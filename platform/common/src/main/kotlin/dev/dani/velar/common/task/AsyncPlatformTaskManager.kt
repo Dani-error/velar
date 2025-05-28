@@ -1,7 +1,6 @@
 package dev.dani.velar.common.task
 
-import dev.dani.velar.api.PlatformTaskManager
-import java.util.*
+import dev.dani.velar.api.platform.PlatformTaskManager
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService

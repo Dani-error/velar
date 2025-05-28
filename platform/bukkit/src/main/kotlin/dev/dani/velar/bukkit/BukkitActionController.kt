@@ -13,9 +13,11 @@ import dev.dani.velar.api.NPCActionController.Companion.TAB_REMOVAL_TICKS
 import dev.dani.velar.api.event.NPCEventManager
 import dev.dani.velar.api.event.ShowNPCEvent
 import dev.dani.velar.api.flag.NPCFlag
+import dev.dani.velar.api.platform.PlatformVersionAccessor
 import dev.dani.velar.api.protocol.enums.EntityAnimation
 import dev.dani.velar.api.protocol.enums.PlayerInfoAction
 import dev.dani.velar.api.protocol.meta.EntityMetadataFactory
+import dev.dani.velar.api.util.Position
 import dev.dani.velar.bukkit.util.BukkitPlatformUtil.distance
 import dev.dani.velar.bukkit.util.BukkitPlatformUtil.positionFromBukkitLegacy
 import dev.dani.velar.bukkit.util.bukkitNPC

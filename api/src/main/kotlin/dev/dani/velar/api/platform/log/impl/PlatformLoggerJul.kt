@@ -1,6 +1,6 @@
-package dev.dani.velar.api.log.impl
+package dev.dani.velar.api.platform.log.impl
 
-import dev.dani.velar.api.log.PlatformLogger
+import dev.dani.velar.api.platform.log.PlatformLogger
 import java.util.logging.Level
 import java.util.logging.Logger
 

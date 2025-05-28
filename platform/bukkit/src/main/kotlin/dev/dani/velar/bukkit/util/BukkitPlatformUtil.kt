@@ -1,7 +1,7 @@
 package dev.dani.velar.bukkit.util
 
 import dev.dani.velar.api.NPC
-import dev.dani.velar.api.Position
+import dev.dani.velar.api.util.Position
 import dev.dani.velar.common.util.ClassHelper.classExists
 import org.bukkit.Location
 import org.bukkit.util.NumberConversions.square

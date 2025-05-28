@@ -1,6 +1,6 @@
 package dev.dani.velar.api.protocol.meta
 
-import dev.dani.velar.api.PlatformVersionAccessor
+import dev.dani.velar.api.platform.PlatformVersionAccessor
 import dev.dani.velar.api.protocol.enums.EntityStatus
 import java.lang.reflect.Type
 

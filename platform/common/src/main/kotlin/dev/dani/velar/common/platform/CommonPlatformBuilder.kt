@@ -2,7 +2,11 @@ package dev.dani.velar.common.platform
 
 import dev.dani.velar.api.*
 import dev.dani.velar.api.event.NPCEventManager
-import dev.dani.velar.api.log.PlatformLogger
+import dev.dani.velar.api.platform.log.PlatformLogger
+import dev.dani.velar.api.platform.Platform
+import dev.dani.velar.api.platform.PlatformTaskManager
+import dev.dani.velar.api.platform.PlatformVersionAccessor
+import dev.dani.velar.api.platform.PlatformWorldAccessor
 import dev.dani.velar.api.profile.resolver.ProfileResolver
 import dev.dani.velar.api.protocol.PlatformPacketAdapter
 import dev.dani.velar.common.CommonNPCTracker

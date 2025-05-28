@@ -3,6 +3,7 @@ package dev.dani.velar.api
 import dev.dani.velar.api.flag.NPCFlag
 import dev.dani.velar.api.flag.flagged.NPCFlaggedBuilder
 import dev.dani.velar.api.flag.flagged.NPCFlaggedObject
+import dev.dani.velar.api.platform.Platform
 import dev.dani.velar.api.profile.Profile
 import dev.dani.velar.api.profile.resolver.ProfileResolver
 import dev.dani.velar.api.protocol.NPCSpecificOutboundPacket
@@ -10,6 +11,7 @@ import dev.dani.velar.api.protocol.enums.EntityAnimation
 import dev.dani.velar.api.protocol.enums.ItemSlot
 import dev.dani.velar.api.protocol.meta.EntityMetadataFactory
 import dev.dani.velar.api.settings.NPCSettings
+import dev.dani.velar.api.util.Position
 import java.util.concurrent.CompletableFuture
 
 

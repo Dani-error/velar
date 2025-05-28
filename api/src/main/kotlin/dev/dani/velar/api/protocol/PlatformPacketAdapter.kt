@@ -1,6 +1,6 @@
 package dev.dani.velar.api.protocol
 
-import dev.dani.velar.api.Platform
+import dev.dani.velar.api.platform.Platform
 import dev.dani.velar.api.protocol.enums.EntityAnimation
 import dev.dani.velar.api.protocol.enums.ItemSlot
 import dev.dani.velar.api.protocol.enums.PlayerInfoAction

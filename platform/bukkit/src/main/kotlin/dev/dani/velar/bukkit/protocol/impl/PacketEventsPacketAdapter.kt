@@ -24,9 +24,9 @@ import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEn
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerPlayerInfo.PlayerData
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerPlayerInfoUpdate.PlayerInfo
 import dev.dani.velar.api.NPC
-import dev.dani.velar.api.Platform
-import dev.dani.velar.api.PlatformVersionAccessor
-import dev.dani.velar.api.Position
+import dev.dani.velar.api.platform.Platform
+import dev.dani.velar.api.platform.PlatformVersionAccessor
+import dev.dani.velar.api.util.Position
 import dev.dani.velar.api.event.InteractNPCEvent
 import dev.dani.velar.api.protocol.Component
 import dev.dani.velar.api.protocol.OutboundPacket

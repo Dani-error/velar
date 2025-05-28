@@ -1,6 +1,6 @@
 package dev.dani.velar.bukkit
 
-import dev.dani.velar.api.PlatformTaskManager
+import dev.dani.velar.api.platform.PlatformTaskManager
 import org.bukkit.plugin.Plugin
 
 
