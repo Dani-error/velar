@@ -10,7 +10,7 @@ import dev.dani.velar.api.NPC
  */
 interface NPCEvent {
 
-    fun <W, P, I, E> npc(): NPC<W, P, I, E>
+    val npc: NPC<*, *, *, *>
 
 }
 

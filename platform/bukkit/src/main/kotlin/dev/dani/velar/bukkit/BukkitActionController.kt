@@ -1,16 +1,15 @@
+@file:Suppress("UNCHECKED_CAST")
+
 package dev.dani.velar.bukkit
 
+import dev.dani.velar.api.*
 import dev.dani.velar.api.NPC.Companion.HIT_WHEN_PLAYER_HITS
 import dev.dani.velar.api.NPC.Companion.LOOK_AT_PLAYER
 import dev.dani.velar.api.NPC.Companion.SNEAK_WHEN_PLAYER_SNEAKS
-import dev.dani.velar.api.NPCActionController
 import dev.dani.velar.api.NPCActionController.Companion.AUTO_SYNC_POSITION_ON_SPAWN
 import dev.dani.velar.api.NPCActionController.Companion.IMITATE_DISTANCE
 import dev.dani.velar.api.NPCActionController.Companion.SPAWN_DISTANCE
 import dev.dani.velar.api.NPCActionController.Companion.TAB_REMOVAL_TICKS
-import dev.dani.velar.api.NPCTracker
-import dev.dani.velar.api.PlatformVersionAccessor
-import dev.dani.velar.api.Position
 import dev.dani.velar.api.event.NPCEventManager
 import dev.dani.velar.api.event.ShowNPCEvent
 import dev.dani.velar.api.flag.NPCFlag
@@ -19,6 +18,8 @@ import dev.dani.velar.api.protocol.enums.PlayerInfoAction
 import dev.dani.velar.api.protocol.meta.EntityMetadataFactory
 import dev.dani.velar.bukkit.util.BukkitPlatformUtil.distance
 import dev.dani.velar.bukkit.util.BukkitPlatformUtil.positionFromBukkitLegacy
+import dev.dani.velar.bukkit.util.bukkitNPC
+import dev.dani.velar.bukkit.util.bukkitPlayer
 import dev.dani.velar.common.CommonNPCActionController
 import dev.dani.velar.common.flag.CommonNPCFlaggedBuilder
 import org.bukkit.Location
@@ -67,10 +68,11 @@ class BukkitActionController(
                 val tabRemovalTicks = flagValueOrDefault(TAB_REMOVAL_TICKS)!!
                 plugin.server.scheduler.runTaskLaterAsynchronously(plugin, Runnable {
                     // schedule the removal of the player from the tab list, can be done async
-                    val player: Player = event.player()
-                    event.npc<World, Player, ItemStack, Plugin>().platform.packetFactory
+                    val player = event.bukkitPlayer()
+                    val npc = event.bukkitNPC()
+                    npc.platform.packetFactory
                         .createPlayerInfoPacket(PlayerInfoAction.REMOVE_PLAYER)
-                        .schedule(player, event.npc())
+                        .schedule(player, npc)
                 }, tabRemovalTicks.toLong())
             }
         }
@@ -87,11 +89,11 @@ class BukkitActionController(
         // register listener to update the npc rotation after it is tracked
         if (flagValueOrDefault(AUTO_SYNC_POSITION_ON_SPAWN)!!) {
             eventManager.registerEventHandler(ShowNPCEvent.Post::class.java) { event ->
-                val player: Player = event.player()
+                val player: Player = event.bukkitPlayer()
                 val to: Location = player.location
-                val npc = event.npc<World, Player, ItemStack, Plugin>()
+                val npc = event.bukkitNPC()
 
-                val distance = distance(event.npc<World, Player, ItemStack, Plugin>(), to)
+                val distance = distance(npc, to)
                 if (distance <= this.imitateDistance && npc.flagValueOrDefault(LOOK_AT_PLAYER) == true) {
                     npc.lookAt(positionFromBukkitLegacy(to)).schedule(player)
                 }

@@ -11,8 +11,4 @@ import dev.dani.velar.api.event.NPCEvent
  * Created at: 25/05/2025 19:18
  * Created by: Dani-error
  */
-abstract class CommonNPCEvent(private val npc: NPC<*, *, *, *>) : NPCEvent {
-
-    override fun <W, P, I, E> npc(): NPC<W, P, I, E> = npc as NPC<W, P, I, E>
-
-}
+abstract class CommonNPCEvent(override val npc: NPC<*, *, *, *>) : NPCEvent

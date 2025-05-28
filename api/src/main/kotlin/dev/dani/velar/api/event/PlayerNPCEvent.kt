@@ -9,7 +9,7 @@ package dev.dani.velar.api.event
 
 interface PlayerNPCEvent : NPCEvent {
 
-    fun <P> player(): P
+    val player: Any
 
 }
 

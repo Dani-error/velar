@@ -92,7 +92,7 @@ class CommonNPC<W, P, I, E>(
         // check if the player is not already tracked
         if (!trackedPlayers.contains(player)) {
             // break early if the add is not wanted by plugin
-            if (platform.eventManager.post(DefaultShowNPCEvent.pre(this, player)).cancelled) {
+            if (platform.eventManager.post(DefaultShowNPCEvent.pre(this, player!!)).cancelled) {
                 return this
             }
 
@@ -118,7 +118,7 @@ class CommonNPC<W, P, I, E>(
         // check if the player was previously tracked
         if (this.trackedPlayers.contains(player)) {
             // break early if the removal is not wanted by plugin
-            if (this.platform.eventManager.post(DefaultHideNPCEvent.pre(this, player)).cancelled) {
+            if (this.platform.eventManager.post(DefaultHideNPCEvent.pre(this, player!!)).cancelled) {
                 return this
             }
 

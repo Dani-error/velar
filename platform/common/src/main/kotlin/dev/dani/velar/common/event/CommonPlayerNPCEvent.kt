@@ -12,13 +12,9 @@ import dev.dani.velar.api.event.InteractNPCEvent.Hand
  * Created at: 25/05/2025 19:19
  * Created by: Dani-error
  */
-abstract class CommonPlayerNPCEvent(npc: NPC<*, *, *, *>, private val player: Any?) : CommonNPCEvent(npc), PlayerNPCEvent {
+abstract class CommonPlayerNPCEvent(override val npc: NPC<*, *, *, *>, override val player: Any) : CommonNPCEvent(npc), PlayerNPCEvent
 
-    override fun <P> player(): P = player as P
-
-}
-
-class DefaultAttackNPCEvent(npc: NPC<*, *, *, *>, player: Any?) : CommonPlayerNPCEvent(npc, player), AttackNPCEvent {
+class DefaultAttackNPCEvent(npc: NPC<*, *, *, *>, player: Any) : CommonPlayerNPCEvent(npc, player), AttackNPCEvent {
 
     override var cancelled: Boolean = false
 
@@ -28,14 +24,14 @@ class DefaultAttackNPCEvent(npc: NPC<*, *, *, *>, player: Any?) : CommonPlayerNP
 
     companion object {
 
-        fun attackNPC(npc: NPC<*, *, *, *>, player: Any?): AttackNPCEvent =
+        fun attackNPC(npc: NPC<*, *, *, *>, player: Any): AttackNPCEvent =
             DefaultAttackNPCEvent(npc, player)
 
     }
 
 }
 
-class DefaultInteractNPCEvent(npc: NPC<*, *, *, *>, player: Any?, override val hand: Hand) : CommonPlayerNPCEvent(npc, player), InteractNPCEvent {
+class DefaultInteractNPCEvent(npc: NPC<*, *, *, *>, player: Any, override val hand: Hand) : CommonPlayerNPCEvent(npc, player), InteractNPCEvent {
 
     override var cancelled: Boolean = false
 
@@ -47,7 +43,7 @@ class DefaultInteractNPCEvent(npc: NPC<*, *, *, *>, player: Any?, override val h
 
         fun interactNPC(
             npc: NPC<*, *, *, *>,
-            player: Any?,
+            player: Any,
             hand: Hand
         ): InteractNPCEvent = DefaultInteractNPCEvent(npc, player, hand)
 
@@ -55,20 +51,20 @@ class DefaultInteractNPCEvent(npc: NPC<*, *, *, *>, player: Any?, override val h
 
 }
 
-open class DefaultHideNPCEvent(npc: NPC<*, *, *, *>, player: Any?) : CommonPlayerNPCEvent(npc, player), HideNPCEvent {
+open class DefaultHideNPCEvent(npc: NPC<*, *, *, *>, player: Any) : CommonPlayerNPCEvent(npc, player), HideNPCEvent {
 
 
     companion object {
 
-        fun pre(npc: NPC<*, *, *, *>, player: Any?): HideNPCEvent.Pre =
+        fun pre(npc: NPC<*, *, *, *>, player: Any): HideNPCEvent.Pre =
             DefaultPre(npc, player)
 
-        fun post(npc: NPC<*, *, *, *>, player: Any?): HideNPCEvent.Post =
+        fun post(npc: NPC<*, *, *, *>, player: Any): HideNPCEvent.Post =
             DefaultPost(npc, player)
 
     }
 
-    internal class DefaultPre(npc: NPC<*, *, *, *>, player: Any?) : DefaultHideNPCEvent(npc, player), HideNPCEvent.Pre {
+    internal class DefaultPre(npc: NPC<*, *, *, *>, player: Any) : DefaultHideNPCEvent(npc, player), HideNPCEvent.Pre {
 
         override var cancelled: Boolean = false
 
@@ -78,24 +74,24 @@ open class DefaultHideNPCEvent(npc: NPC<*, *, *, *>, player: Any?) : CommonPlaye
 
     }
 
-    internal class DefaultPost(npc: NPC<*, *, *, *>, player: Any?) : DefaultHideNPCEvent(npc, player), HideNPCEvent.Post
+    internal class DefaultPost(npc: NPC<*, *, *, *>, player: Any) : DefaultHideNPCEvent(npc, player), HideNPCEvent.Post
 
 }
 
-open class DefaultShowNPCEvent(npc: NPC<*, *, *, *>, player: Any?) : CommonPlayerNPCEvent(npc, player), ShowNPCEvent {
+open class DefaultShowNPCEvent(npc: NPC<*, *, *, *>, player: Any) : CommonPlayerNPCEvent(npc, player), ShowNPCEvent {
 
 
     companion object {
 
-        fun pre(npc: NPC<*, *, *, *>, player: Any?): ShowNPCEvent.Pre =
+        fun pre(npc: NPC<*, *, *, *>, player: Any): ShowNPCEvent.Pre =
             DefaultPre(npc, player)
 
-        fun post(npc: NPC<*, *, *, *>, player: Any?): ShowNPCEvent.Post =
+        fun post(npc: NPC<*, *, *, *>, player: Any): ShowNPCEvent.Post =
             DefaultPost(npc, player)
 
     }
 
-    internal class DefaultPre(npc: NPC<*, *, *, *>, player: Any?) : DefaultShowNPCEvent(npc, player), ShowNPCEvent.Pre {
+    internal class DefaultPre(npc: NPC<*, *, *, *>, player: Any) : DefaultShowNPCEvent(npc, player), ShowNPCEvent.Pre {
 
         override var cancelled: Boolean = false
 
@@ -105,6 +101,6 @@ open class DefaultShowNPCEvent(npc: NPC<*, *, *, *>, player: Any?) : CommonPlaye
 
     }
 
-    internal class DefaultPost(npc: NPC<*, *, *, *>, player: Any?) : DefaultShowNPCEvent(npc, player), ShowNPCEvent.Post
+    internal class DefaultPost(npc: NPC<*, *, *, *>, player: Any) : DefaultShowNPCEvent(npc, player), ShowNPCEvent.Post
 
 }
