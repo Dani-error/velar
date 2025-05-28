@@ -1,7 +1,7 @@
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Dani-error/velar/refs/heads/master/.github/assets/logo-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Dani-error/velar/refs/heads/master/.github/assets/logo-light.svg">
-  <img alt="Fallback logo image" src="https://raw.githubusercontent.com/Dani-error/velar/refs/heads/master/.github/assets/logo-dark.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Dani-error/velar/refs/heads/main/.github/assets/logo-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Dani-error/velar/refs/heads/main/.github/assets/logo-light.svg">
+  <img alt="Fallback logo image" src="https://raw.githubusercontent.com/Dani-error/velar/refs/heads/main/.github/assets/logo-dark.svg">
 </picture>
 
 > Library ported and based from [@juliarn/npc-lib](https://github.com/juliarn/npc-lib) to Kotlin.
