@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package dev.dani.velar.api.protocol.meta
 
 import dev.dani.velar.api.platform.PlatformVersionAccessor

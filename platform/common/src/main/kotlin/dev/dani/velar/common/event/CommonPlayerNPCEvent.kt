@@ -1,5 +1,3 @@
-@file:Suppress("UNCHECKED_CAST")
-
 package dev.dani.velar.common.event
 
 import dev.dani.velar.api.NPC

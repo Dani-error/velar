@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package dev.dani.velar.bukkit
 
 import dev.dani.velar.api.platform.PlatformWorldAccessor

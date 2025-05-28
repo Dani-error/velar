@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package dev.dani.velar.api.platform.log
 
 import dev.dani.velar.api.platform.log.impl.PlatformLoggerJul

@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package dev.dani.velar.api.profile
 
 import dev.dani.velar.api.util.safeEquals

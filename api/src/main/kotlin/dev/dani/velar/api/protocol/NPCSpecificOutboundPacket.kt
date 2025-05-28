@@ -47,7 +47,7 @@ internal class DefaultNPCSpecificOutboundPacket<W, P, I, E>(
         this.outboundPacket.schedule(players, this.target)
 
     override fun schedule(player: P) =
-        this.outboundPacket.schedule(player, this.target);
+        this.outboundPacket.schedule(player, this.target)
 
 
 }
