@@ -4,13 +4,13 @@
   <img alt="Fallback logo image" src="https://raw.githubusercontent.com/Dani-error/velar/refs/heads/master/.github/assets/logo-dark.svg">
 </picture>
 
-> Library ported and based from [@juliarn/npc-lib](https://github.com/juliarn/npc-lib) to Kotlin.
+> Library ported and based of [@juliarn/npc-lib](https://github.com/juliarn/npc-lib) to Kotlin.
 
 <br/>
 
 ## Features
 
-- **Bukkit & Forks** (including Folia) supported via **ProtocolLib** or **PacketEvents*
+- **Bukkit & Forks** (including Folia) supported via **ProtocolLib** or **PacketEvents**
 - **Skin** (Static and Dynamic loading)
 - **Attributes** (Status, Pose, Skin Layers)
 - **Equipment** (Main & Off-Hand, Armor)
@@ -22,21 +22,30 @@
 
 ## Usage
 
+<details open>
+  <summary><strong>Gradle (Kotlin DSL)</strong></summary>
+
+  ```kotlin
+  repositories {
+      mavenCentral()
+  }
+
+  dependencies {
+      implementation("io.github.dani-error.velar:<module>:1.0.0")
+  }
+  ```
+
+_Replace `<module>` with one of the modules listed below._
+</details>
+
 <details>
   <summary><strong>Maven</strong></summary>
 
   ```xml
-  <repositories>
-    <repository>
-      <id>jitpack.io</id>
-      <url>https://jitpack.io</url>
-    </repository>
-  </repositories>
-
   <dependency>
-    <groupId>dev.dani.velar</groupId>
+    <groupId>io.github.dani-error.velar</groupId>
     <artifactId>MODULE</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
   </dependency>
   ```
 
@@ -44,31 +53,15 @@
 </details>
 
 <details>
-  <summary><strong>Gradle (Kotlin DSL)</strong></summary>
-
-  ```kotlin
-  repositories {
-      maven("https://jitpack.io")
-  }
-
-  dependencies {
-      implementation("dev.dani.velar:<module>:1.0.0-SNAPSHOT")
-  }
-  ```
-
-  _Replace `<module>` with one of the modules listed below._
-</details>
-
-<details>
   <summary><strong>Gradle (Groovy DSL)</strong></summary>
 
   ```groovy
   repositories {
-      maven { url 'https://jitpack.io' }
+      mavenCentral()
   }
 
   dependencies {
-      implementation 'dev.dani.velar:<module>:1.0.0-SNAPSHOT'
+      implementation 'io.github.dani-error.velar:<module>:1.0.0'
   }
   ```
 
@@ -108,6 +101,7 @@
 | Common      | `common`    | Abstract API implementations for building new platforms.                     |
 | Bukkit      | `bukkit`    | Full Bukkit (and forks) implementation—includes API & Common.    |
 
+All of them published in [maven central](https://central.sonatype.com/search?q=io.github.dani-error.velar). 
 ---
 
 ## Documentation

@@ -1,11 +1,20 @@
+import com.vanniktech.maven.publish.MavenPublishBaseExtension
+import com.vanniktech.maven.publish.SonatypeHost
+import java.lang.Integer.parseInt
 import java.net.URI
-import java.net.URL
 
 plugins {
     kotlin("jvm") version "2.1.21" apply false
+    id("com.vanniktech.maven.publish") version "0.32.0"
+    id("org.jetbrains.dokka") version "2.0.0"
 }
 
+defaultTasks("clean", "build")
+
 allprojects {
+    group = project.property("GROUP")!!.toString()
+    version = project.property("VERSION_NAME")!!.toString()
+
     repositories {
         mavenCentral()
     }
@@ -13,47 +22,66 @@ allprojects {
 
 subprojects {
     apply(plugin = "org.jetbrains.kotlin.jvm")
-    if (project.name != "platform")
-        apply(plugin = "maven-publish")
+    if (project.name != "platform") {
+        apply(plugin = "com.vanniktech.maven.publish")
+    }
+    apply(plugin = "org.jetbrains.dokka")
 
-    group = "dev.dani"
-    version = "1.0.0-SNAPSHOT"
-
-    val targetJavaVersion = 21
-
-    tasks.withType<JavaCompile>().configureEach {
-        if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible) {
-            options.release.set(targetJavaVersion)
+    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+        kotlinOptions {
+            jvmTarget = project.property("JAVA_VERSION")!!.toString()
         }
     }
 
-    // Configure publishing
-    if (project.name != "platform") {
-        extensions.configure<PublishingExtension> {
-            publications {
-                create<MavenPublication>("mavenJava") {
-                    from(components["java"])
-                    groupId = "${project.group}.velar"
-                    artifactId = project.name
-                    version = project.version.toString()
-                }
-            }
+    tasks.withType<Jar> {
+        from(rootProject.file("LICENSE"))
+        duplicatesStrategy = DuplicatesStrategy.INCLUDE
+    }
 
-            repositories {
-                maven {
-                    name = "GitHubPackages"
-                    url = URI("https://maven.pkg.github.com/Dani-error/velar")
-                    credentials {
-                        username = System.getenv("GITHUB_ACTOR")
-                        password = System.getenv("GITHUB_TOKEN")
+    if (project.name != "platform") {
+        extensions.configure<MavenPublishBaseExtension> {
+            publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+            signAllPublications()
+
+            publishing {
+                repositories {
+                    maven {
+                        name = "githubPackages"
+                        url = uri("https://maven.pkg.github.com/Dani-error/velar")
+                        credentials(PasswordCredentials::class)
                     }
                 }
             }
-        }
 
-        // Ensure build also triggers publishToMavenLocal
-        tasks.named("build") {
-            finalizedBy("publishToMavenLocal")
+            pom {
+                name = "Velar"
+                description = project.property("DESCRIPTION")!!.toString()
+                inceptionYear = project.property("INCEPTION_YEAR")!!.toString()
+                url = project.property("PROJECT_URL")!!.toString()
+                licenses {
+                    license {
+                        name = project.property("LICENSE_NAME")!!.toString()
+                        url = project.property("LICENSE_URL")!!.toString()
+                    }
+                }
+                ciManagement {
+                    system.set(project.property("CI_SYSTEM")!!.toString())
+                    url.set(project.property("CI_URL")!!.toString())
+                }
+                developers {
+                    developer {
+                        id = project.property("DEVELOPER_ID")!!.toString()
+                        name = project.property("DEVELOPER_NAME")!!.toString()
+                        url = project.property("DEVELOPER_URL")!!.toString()
+                    }
+                }
+                scm {
+                    val repoUrl = project.property("PROJECT_URL")!!.toString()
+                    url = repoUrl
+                    connection = "scm:git:git://github.com/Dani-error/velar.git"
+                    developerConnection = "scm:git:ssh://git@github.com/Dani-error/velar.git"
+                }
+            }
         }
     }
 }
