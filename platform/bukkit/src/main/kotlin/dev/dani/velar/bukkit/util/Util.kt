@@ -3,6 +3,7 @@ package dev.dani.velar.bukkit.util
 import dev.dani.velar.api.NPC
 import dev.dani.velar.api.event.NPCEvent
 import dev.dani.velar.api.event.PlayerNPCEvent
+import dev.dani.velar.api.settings.NPCProfileResolver
 import org.bukkit.World
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
@@ -25,3 +26,11 @@ fun NPCEvent.bukkitNPC(): NPC<World, Player, ItemStack, Plugin> {
 }
 
 fun PlayerNPCEvent.bukkitPlayer(): Player = player as Player
+
+fun NPCProfileResolver.Companion.ofViewer(uuid: Boolean = true): NPCProfileResolver<Player> {
+    return NPCProfileResolver { player, npc ->
+        val resolver = if (uuid) ofUniqueId<Player>(player.uniqueId) else ofName(player.name)
+
+        return@NPCProfileResolver resolver.resolveNPCProfile(player, npc)
+    }
+}
