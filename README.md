@@ -87,7 +87,7 @@ _Replace `<module>` with one of the modules listed below._
   - `io.leangen.geantyref`
   - `io.github.retrooper`
   - `com.github.retrooper`
-  - `com.github.juliarn.npclib`
+  - `dev.dani.velar`
 </details>
 
 
