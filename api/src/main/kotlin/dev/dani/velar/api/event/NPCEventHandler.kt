@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package dev.dani.velar.api.event
 
 import kotlin.reflect.KClass
