@@ -4,7 +4,7 @@
   <img alt="Fallback logo image" src="https://raw.githubusercontent.com/Dani-error/velar/refs/heads/main/.github/assets/logo-dark.svg">
 </picture>
 
-> Library ported and based of [@juliarn/npc-lib](https://github.com/juliarn/npc-lib) to Kotlin.
+> Library ported from and based of [@juliarn/npc-lib](https://github.com/juliarn/npc-lib) to Kotlin.
 
 <br/>
 
