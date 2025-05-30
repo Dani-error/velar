@@ -82,7 +82,6 @@ _Replace `<module>` with one of the modules listed below._
   <summary><strong>Shading</strong></summary>
 
   To avoid conflicts when multiple plugins ship the same dependencies, shade/relocate these packages:
-  - `net.kyori`
   - `io.papermc.lib`
   - `io.leangen.geantyref`
   - `io.github.retrooper`
@@ -95,11 +94,11 @@ _Replace `<module>` with one of the modules listed below._
 
 ## Modules
 
-| Module Name | Artifact ID | Description                                                                                           |
-|-------------|-------------|-------------------------------------------------------------------------------------------------------|
-| API         | `api`       | Core Velar API (no platform-specific code). |
-| Common      | `common`    | Abstract API implementations for building new platforms.                     |
-| Bukkit      | `bukkit`    | Full Bukkit (and forks) implementation—includes API & Common.    |
+| Module Name | Artifact ID | Description                                                   |
+|-------------|-------------|---------------------------------------------------------------|
+| API         | `api`       | Core Velar API (no platform-specific code).                   |
+| Common      | `common`    | Abstract API implementations for building new platforms.      |
+| Bukkit      | `bukkit`    | Full Bukkit (and forks) implementation—includes API & Common. |
 
 All of them published in [maven central](https://central.sonatype.com/search?q=io.github.dani-error.velar).
 
