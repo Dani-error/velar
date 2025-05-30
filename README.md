@@ -82,6 +82,7 @@ _Replace `<module>` with one of the modules listed below._
   <summary><strong>Shading</strong></summary>
 
   To avoid conflicts when multiple plugins ship the same dependencies, shade/relocate these packages:
+  - `net.kyori`
   - `io.papermc.lib`
   - `io.leangen.geantyref`
   - `io.github.retrooper`
