@@ -101,7 +101,8 @@ _Replace `<module>` with one of the modules listed below._
 | Common      | `common`    | Abstract API implementations for building new platforms.                     |
 | Bukkit      | `bukkit`    | Full Bukkit (and forks) implementation—includes API & Common.    |
 
-All of them published in [maven central](https://central.sonatype.com/search?q=io.github.dani-error.velar). 
+All of them published in [maven central](https://central.sonatype.com/search?q=io.github.dani-error.velar).
+
 ---
 
 ## Documentation
