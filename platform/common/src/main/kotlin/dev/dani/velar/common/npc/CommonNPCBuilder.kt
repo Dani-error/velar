@@ -1,6 +1,7 @@
 package dev.dani.velar.common.npc
 
 import dev.dani.velar.api.NPC
+import dev.dani.velar.api.event.NPCEventHandler
 import dev.dani.velar.api.platform.Platform
 import dev.dani.velar.api.util.Position
 import dev.dani.velar.api.profile.Profile
@@ -26,6 +27,8 @@ class CommonNPCBuilder<W, P, I, E>(private val platform: Platform<W, P, I, E>) :
 
     private var profile: Profile.Resolved? = null
     private var npcSettings: NPCSettings<P>? = null
+    private var eventHandler: NPCEventHandler? = null
+
 
     override fun entityId(id: Int): NPC.Builder<W, P, I, E> {
         // validate the npc entity id
@@ -66,6 +69,14 @@ class CommonNPCBuilder<W, P, I, E>(private val platform: Platform<W, P, I, E>) :
             }
     }
 
+    override fun eventHandler(block: NPCEventHandler.Builder.() -> Unit): NPC.Builder<W, P, I, E> {
+        val builder = NPCEventHandler.Builder()
+        builder.block()
+        eventHandler = builder.build()
+
+        return this
+    }
+
     override fun npcSettings(decorator: (NPCSettings.Builder<P>) -> Unit): NPC.Builder<W, P, I, E> {
         // build the npc settings
         val builder: NPCSettings.Builder<P> = CommonNPCSettingsBuilder()
@@ -81,6 +92,10 @@ class CommonNPCBuilder<W, P, I, E>(private val platform: Platform<W, P, I, E>) :
             this.npcSettings { }
         }
 
+        if (this.eventHandler == null) {
+            this.eventHandler {  }
+        }
+
         return CommonNPC(
             this.flags,
             this.entityId,
@@ -88,7 +103,8 @@ class CommonNPCBuilder<W, P, I, E>(private val platform: Platform<W, P, I, E>) :
             requireNotNull(world) { "world and position must be given" },
             requireNotNull(pos) { "world and position must be given" },
             platform,
-            requireNotNull(npcSettings) { "npc settings must be given" }
+            requireNotNull(npcSettings) { "npc settings must be given" },
+            requireNotNull(eventHandler) { "event handler must be given" }
         )
     }
 

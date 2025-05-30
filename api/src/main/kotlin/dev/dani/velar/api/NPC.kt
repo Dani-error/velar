@@ -1,5 +1,6 @@
 package dev.dani.velar.api
 
+import dev.dani.velar.api.event.NPCEventHandler
 import dev.dani.velar.api.flag.NPCFlag
 import dev.dani.velar.api.flag.flagged.NPCFlaggedBuilder
 import dev.dani.velar.api.flag.flagged.NPCFlaggedObject
@@ -29,6 +30,7 @@ interface NPC<W, P, I, E> : NPCFlaggedObject {
     val settings: NPCSettings<P>
     val platform: Platform<W, P, I, E>
     val npcTracker: NPCTracker<W, P, I, E>
+    val eventHandler: NPCEventHandler
 
     val includedPlayers: Collection<P>
     val trackedPlayers: Collection<P>
@@ -70,6 +72,8 @@ interface NPC<W, P, I, E> : NPCFlaggedObject {
             resolver: ProfileResolver?,
             profile: Profile
         ): CompletableFuture<Builder<W, P, I, E>>
+
+        fun eventHandler(block: NPCEventHandler.Builder.() -> Unit): Builder<W, P, I, E>
 
         fun npcSettings(decorator: (NPCSettings.Builder<P>) -> Unit): Builder<W, P, I, E>
 

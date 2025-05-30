@@ -2,6 +2,7 @@ package dev.dani.velar.common.npc
 
 import dev.dani.velar.api.NPC
 import dev.dani.velar.api.NPCTracker
+import dev.dani.velar.api.event.NPCEventHandler
 import dev.dani.velar.api.platform.Platform
 import dev.dani.velar.api.util.Position
 import dev.dani.velar.api.flag.NPCFlag
@@ -34,7 +35,8 @@ class CommonNPC<W, P, I, E>(
     override val world: W,
     override val position: Position,
     override val platform: Platform<W, P, I, E>,
-    override val settings: NPCSettings<P>
+    override val settings: NPCSettings<P>,
+    override val eventHandler: NPCEventHandler
 ) : CommonNPCFlaggedObject(flags), NPC<W, P, I, E> {
 
     override val trackedPlayers: MutableSet<P> = Collections.synchronizedSet(HashSet())

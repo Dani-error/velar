@@ -46,6 +46,8 @@ internal class DefaultNPCEventManager(
         ConcurrentHashMap(16, 0.9f, 1)
 
     override fun <E : NPCEvent> post(event: E): E {
+        event.npc.eventHandler.handle(event)
+
         for ((subscribedEventType, subscriptions) in registeredSubscribers) {
             if (subscribedEventType.isInstance(event) && subscriptions.isNotEmpty()) {
                 for (subscription in subscriptions) {
