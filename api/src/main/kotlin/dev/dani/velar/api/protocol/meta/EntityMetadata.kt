@@ -24,7 +24,7 @@ interface DefaultEntityMetadata {
 
     companion object {
 
-        // https://wiki.vg/Entity_metadata#Entity - see index 0
+        // https://minecraft.wiki/w/Minecraft_Wiki:Projects/wiki.vg_merge/Entity_metadata#Entity - see index 0
         val ENTITY_STATUS = EntityMetadataFactory.metaFactoryBuilder<Collection<EntityStatus>, Byte>()
             .baseIndex(0)
             .type(java.lang.Byte::class.java)
@@ -58,7 +58,15 @@ interface DefaultEntityMetadata {
                 return@inputConverter entryMask
             }.build()
 
-        // https://wiki.vg/Entity_metadata#Entity - see index 0 and 6
+        // https://minecraft.wiki/w/Minecraft_Wiki:Projects/wiki.vg_merge/Entity_metadata#Entity - see index 6
+        val ENTITY_POSE = EntityMetadataFactory.metaFactoryBuilder<EntityPose, EntityPose>()
+            .baseIndex(6)
+            .type(EntityPose::class.java)
+            .inputConverter { it }
+            .availabilityChecker { it.atLeast(1, 14, 0) }
+            .build()
+
+        // https://minecraft.wiki/w/Minecraft_Wiki:Projects/wiki.vg_merge/Entity_metadata#Entity - see index 0 and 6
         val SNEAKING = EntityMetadataFactory.metaFactoryBuilder<Boolean, Byte>()
             .baseIndex(0)
             .type(java.lang.Byte::class.java)
@@ -67,8 +75,33 @@ interface DefaultEntityMetadata {
                 .baseIndex(6)
                 .type(EntityPose::class.java)
                 .inputConverter { value -> if (value) EntityPose.CROUCHING else EntityPose.STANDING }
-                .availabilityChecker { versionAccessor -> versionAccessor.atLeast(1, 14, 0) }
+                .availabilityChecker { it.atLeast(1, 14, 0) }
                 .build())
+            .build()
+
+        // https://minecraft.wiki/w/Minecraft_Wiki:Projects/wiki.vg_merge/Entity_metadata#Entity - see index 7
+        val SHAKING = EntityMetadataFactory.metaFactoryBuilder<Boolean, Int>()
+            .baseIndex(7)
+            .type(java.lang.Integer::class.java)
+            .inputConverter { value -> if (value) 250 else 0 }
+            .availabilityChecker { it.atLeast(1, 17, 0) }
+            .build()
+
+        // https://minecraft.wiki/w/Minecraft_Wiki:Projects/wiki.vg_merge/Entity_metadata#Living_Entity - see index 8
+        val USING_ITEM = EntityMetadataFactory.metaFactoryBuilder<Boolean, Byte>()
+            .baseIndex(5)
+            .type(java.lang.Byte::class.java)
+            .indexShiftVersions(10, 14, 17)
+            .inputConverter { value -> (if (value) 0x01 else 0x00).toByte() }
+            .availabilityChecker { it.atLeast(1, 9, 0) }
+            .build()
+
+        // https://minecraft.wiki/w/Minecraft_Wiki:Projects/wiki.vg_merge/Entity_metadata#Living_Entity - see index 12
+        val ARROW_COUNT = EntityMetadataFactory.metaFactoryBuilder<Int, Int>()
+            .baseIndex(9)
+            .type(java.lang.Integer::class.java)
+            .indexShiftVersions(10, 14, 17)
+            .inputConverter { value -> 0.coerceAtLeast(value) }
             .build()
 
         // https://wiki.vg/Entity_metadata#Player - see index 10

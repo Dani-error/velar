@@ -3,6 +3,7 @@
 package dev.dani.velar.api.protocol.meta
 
 import dev.dani.velar.api.platform.PlatformVersionAccessor
+import dev.dani.velar.api.protocol.enums.EntityPose
 import dev.dani.velar.api.protocol.enums.EntityStatus
 import java.lang.reflect.Type
 
@@ -31,6 +32,18 @@ interface EntityMetadataFactory<I, O> {
 
         fun entityStatusMetaFactory(): EntityMetadataFactory<Collection<EntityStatus>, Byte> =
             DefaultEntityMetadata.ENTITY_STATUS
+
+        fun entityPoseMetaFactory(): EntityMetadataFactory<EntityPose, EntityPose> =
+            DefaultEntityMetadata.ENTITY_POSE
+
+        fun shakingMetaFactory(): EntityMetadataFactory<Boolean, Int> =
+            DefaultEntityMetadata.SHAKING
+
+        fun usingItemMetaFactory(): EntityMetadataFactory<Boolean, Byte> =
+            DefaultEntityMetadata.USING_ITEM
+
+        fun arrowCountMetaFactory(): EntityMetadataFactory<Int, Int> =
+            DefaultEntityMetadata.ARROW_COUNT
 
     }
 
