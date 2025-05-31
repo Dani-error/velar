@@ -3,9 +3,15 @@
 package dev.dani.velar.bukkit.util
 
 import dev.dani.velar.api.NPC
+import dev.dani.velar.api.NPC.Builder
 import dev.dani.velar.api.event.NPCEvent
 import dev.dani.velar.api.event.PlayerNPCEvent
 import dev.dani.velar.api.settings.NPCProfileResolver
+import dev.dani.velar.api.util.Position
+import dev.dani.velar.bukkit.BukkitWorldAccessor.LegacyAccessor
+import dev.dani.velar.bukkit.BukkitWorldAccessor.ModernAccessor
+import io.papermc.lib.PaperLib
+import org.bukkit.Location
 import org.bukkit.World
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
@@ -35,4 +41,14 @@ fun NPCProfileResolver.Companion.ofViewer(uuid: Boolean = true): NPCProfileResol
 
         return@NPCProfileResolver resolver.resolveNPCProfile(player, npc)
     }
+}
+
+fun <W, P, I, E> Builder<W, P, I, E>.position(location: Location): Builder<W, P, I, E> {
+    this.position(if (PaperLib.isPaper() && PaperLib.isVersion(16, 5)) {
+        BukkitPlatformUtil.positionFromBukkitModern(location)
+    } else {
+        BukkitPlatformUtil.positionFromBukkitLegacy(location)
+    })
+
+    return this
 }
