@@ -20,6 +20,9 @@ allprojects {
     }
 }
 
+
+val javaVersion = project.property("JAVA_VERSION")!!.toString()
+
 subprojects {
     apply(plugin = "org.jetbrains.kotlin.jvm")
     if (project.name != "platform") {
@@ -29,8 +32,12 @@ subprojects {
 
     tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
         kotlinOptions {
-            jvmTarget = project.property("JAVA_VERSION")!!.toString()
+            jvmTarget = javaVersion
         }
+    }
+
+    tasks.withType<JavaCompile> {
+        options.release.set(parseInt(javaVersion))
     }
 
     tasks.withType<Jar> {

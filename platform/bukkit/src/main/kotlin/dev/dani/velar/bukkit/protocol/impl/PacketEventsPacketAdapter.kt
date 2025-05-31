@@ -14,28 +14,27 @@ import com.github.retrooper.packetevents.protocol.packettype.PacketType
 import com.github.retrooper.packetevents.protocol.player.*
 import com.github.retrooper.packetevents.protocol.world.Location
 import com.github.retrooper.packetevents.settings.PacketEventsSettings
+import com.github.retrooper.packetevents.util.ColorUtil
 import com.github.retrooper.packetevents.util.TimeStampMode
 import com.github.retrooper.packetevents.util.adventure.AdventureSerializer
 import com.github.retrooper.packetevents.wrapper.PacketWrapper
 import com.github.retrooper.packetevents.wrapper.play.client.WrapperPlayClientInteractEntity
 import com.github.retrooper.packetevents.wrapper.play.client.WrapperPlayClientInteractEntity.InteractAction
 import com.github.retrooper.packetevents.wrapper.play.server.*
-import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityAnimation.*
+import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityAnimation.EntityAnimationType
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerPlayerInfo.PlayerData
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerPlayerInfoUpdate.PlayerInfo
 import dev.dani.velar.api.NPC
+import dev.dani.velar.api.event.InteractNPCEvent
 import dev.dani.velar.api.platform.Platform
 import dev.dani.velar.api.platform.PlatformVersionAccessor
-import dev.dani.velar.api.util.Position
-import dev.dani.velar.api.event.InteractNPCEvent
 import dev.dani.velar.api.protocol.Component
 import dev.dani.velar.api.protocol.OutboundPacket
 import dev.dani.velar.api.protocol.PlatformPacketAdapter
-import dev.dani.velar.api.protocol.enums.EntityAnimation
-import dev.dani.velar.api.protocol.enums.EntityPose
-import dev.dani.velar.api.protocol.enums.ItemSlot
-import dev.dani.velar.api.protocol.enums.PlayerInfoAction
+import dev.dani.velar.api.protocol.TeamInfo
+import dev.dani.velar.api.protocol.enums.*
 import dev.dani.velar.api.protocol.meta.EntityMetadataFactory
+import dev.dani.velar.api.util.Position
 import dev.dani.velar.bukkit.util.enumMapOf
 import dev.dani.velar.common.event.DefaultAttackNPCEvent
 import dev.dani.velar.common.event.DefaultInteractNPCEvent
@@ -297,6 +296,42 @@ object PacketEventsPacketAdapter : PlatformPacketAdapter<World, Player, ItemStac
 
             // EntityMetadata (https://wiki.vg/Protocol#Entity_Metadata)
             val wrapper: PacketWrapper<*> = WrapperPlayServerEntityMetadata(npc.entityId, entityData)
+            packetPlayerManager!!.sendPacketSilently(player, wrapper)
+        }
+    }
+
+    override fun createTeamsPacket(mode: TeamMode, teamName: String, info: TeamInfo?, players: List<String>): OutboundPacket<World, Player, ItemStack, Plugin> {
+        return OutboundPacket { player: Player, npc: NPC<World, Player, ItemStack, Plugin> ->
+            val versionAccessor: PlatformVersionAccessor = npc.platform.versionAccessor
+            fun convertComponent(component: Component): net.kyori.adventure.text.Component {
+                return if (versionAccessor.atLeast(1, 13, 0)) {
+                    component.rawMessage?.let { raw -> AdventureSerializer.fromLegacyFormat(raw) }
+                        ?: AdventureSerializer.parseComponent(component.encodedJsonMessage)
+                } else {
+                    val rawMessage = requireNotNull(component.rawMessage) {
+                        "Versions older than 1.13 don't support json component"
+                    }
+
+                    return AdventureSerializer.fromLegacyFormat(rawMessage)
+                }
+            }
+
+            val wrapper: PacketWrapper<*> = WrapperPlayServerTeams(
+                teamName,
+                WrapperPlayServerTeams.TeamMode.entries[mode.ordinal],
+                if (info != null) WrapperPlayServerTeams.ScoreBoardTeamInfo(
+                    convertComponent(info.displayName),
+                    convertComponent(info.prefix),
+                    convertComponent(info.suffix),
+                    WrapperPlayServerTeams.NameTagVisibility.fromID(info.tagVisibility.id),
+                    WrapperPlayServerTeams.CollisionRule.fromID(info.collisionRule.id),
+                    ColorUtil.fromId(info.color.ordinal),
+                    WrapperPlayServerTeams.OptionData.fromValue(info.optionData.ordinal.toByte())
+                ) else null,
+                players
+            )
+
+            // send the packet without notifying any listeners
             packetPlayerManager!!.sendPacketSilently(player, wrapper)
         }
     }

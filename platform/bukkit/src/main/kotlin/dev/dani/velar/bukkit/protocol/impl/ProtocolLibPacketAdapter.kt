@@ -5,6 +5,7 @@ package dev.dani.velar.bukkit.protocol.impl
 import com.comphenix.protocol.PacketType
 import com.comphenix.protocol.ProtocolLibrary
 import com.comphenix.protocol.ProtocolManager
+import com.comphenix.protocol.events.InternalStructure
 import com.comphenix.protocol.events.PacketAdapter
 import com.comphenix.protocol.events.PacketContainer
 import com.comphenix.protocol.events.PacketEvent
@@ -15,22 +16,22 @@ import com.comphenix.protocol.wrappers.EnumWrappers.EntityUseAction
 import com.comphenix.protocol.wrappers.WrappedDataWatcher.WrappedDataWatcherObject
 import com.google.common.collect.Lists
 import dev.dani.velar.api.NPC
+import dev.dani.velar.api.event.InteractNPCEvent
 import dev.dani.velar.api.platform.Platform
 import dev.dani.velar.api.platform.PlatformVersionAccessor
-import dev.dani.velar.api.event.InteractNPCEvent
 import dev.dani.velar.api.protocol.Component
 import dev.dani.velar.api.protocol.OutboundPacket
 import dev.dani.velar.api.protocol.PlatformPacketAdapter
-import dev.dani.velar.api.protocol.enums.EntityAnimation
-import dev.dani.velar.api.protocol.enums.EntityPose
-import dev.dani.velar.api.protocol.enums.ItemSlot
-import dev.dani.velar.api.protocol.enums.PlayerInfoAction
+import dev.dani.velar.api.protocol.TeamInfo
+import dev.dani.velar.api.protocol.enums.*
 import dev.dani.velar.api.protocol.meta.EntityMetadataFactory
+import dev.dani.velar.bukkit.util.toLegacy
 import dev.dani.velar.common.event.DefaultAttackNPCEvent
 import dev.dani.velar.common.event.DefaultInteractNPCEvent
 import io.leangen.geantyref.GenericTypeReflector
 import io.leangen.geantyref.TypeFactory
 import org.bukkit.Bukkit
+import org.bukkit.ChatColor
 import org.bukkit.World
 import org.bukkit.entity.EntityType
 import org.bukkit.entity.Player
@@ -519,6 +520,116 @@ object ProtocolLibPacketAdapter : PlatformPacketAdapter<World, Player, ItemStack
             } else {
                 // entity id & metadata
                 container.watchableCollectionModifier.write(0, watchableObjects)
+            }
+
+            // send the packet without notifying any bound packet listeners
+            PROTOCOL_MANAGER.sendServerPacket(player, container, false)
+        }
+    }
+
+    override fun createTeamsPacket(
+        mode: TeamMode,
+        teamName: String,
+        info: TeamInfo?,
+        players: List<String>
+    ): OutboundPacket<World, Player, ItemStack, Plugin> {
+        return OutboundPacket { player: Player, npc: NPC<World, Player, ItemStack, Plugin> ->
+            val versionAccessor: PlatformVersionAccessor = npc.platform.versionAccessor
+            val is1_13Plus = MinecraftVersion.AQUATIC_UPDATE.atOrAbove()
+            val is1_18Plus = MinecraftVersion.CAVES_CLIFFS_2.atOrAbove()
+            val is1_20_1Plus = versionAccessor.atLeast(1, 20, 1)
+            val is1_17Plus = MinecraftVersion.CAVES_CLIFFS_1.atOrAbove()
+
+            fun convertComponent(component: Component): WrappedChatComponent {
+                return if (is1_13Plus) {
+                    component.rawMessage?.let { raw -> WrappedChatComponent.fromLegacyText(raw) }
+                        ?: WrappedChatComponent.fromJson(component.encodedJsonMessage)
+                } else {
+                    val rawMessage = requireNotNull(component.rawMessage) {
+                        "Versions older than 1.13 don't support json component"
+                    }
+
+                    return WrappedChatComponent.fromLegacyText(rawMessage)
+                }
+            }
+
+            // UpdateTeams (https://minecraft.wiki/w/Java_Edition_protocol/Packets#Update_Teams)
+            val container = PacketContainer(PacketType.Play.Server.SCOREBOARD_TEAM)
+
+            // 0: team name
+            container.strings.write(0, teamName.take(if (is1_18Plus) 32767 else 16))
+
+            // 1: mode (0 = create, 1 = remove, 2 = update, 3 = add-players, 4 = remove-players)
+            container.integers.write(0, mode.ordinal)
+
+            if (mode == TeamMode.CREATE || mode == TeamMode.UPDATE) {
+                val scoreboardInfo = info ?: TeamInfo()
+
+                val convertedDisplay = convertComponent(scoreboardInfo.displayName)
+                val convertedPrefix = convertComponent(scoreboardInfo.prefix)
+                val convertedSuffix = convertComponent(scoreboardInfo.suffix)
+
+                if (!is1_13Plus) {
+                    val display = convertedDisplay.toLegacy().take(32)
+                    val prefix = convertedPrefix.toLegacy().take(16)
+                    val suffix = convertedSuffix.toLegacy().take(16)
+
+                    container.strings.write(1, display)
+                    container.strings.write(2, prefix)
+                    container.strings.write(3, suffix)
+
+                    container.integers.write(1, scoreboardInfo.optionData.ordinal)
+
+                    container.strings.write(4, scoreboardInfo.tagVisibility.id)
+                    if (versionAccessor.atLeast(1, 9, 0)) {
+                        container.strings.write(5, scoreboardInfo.collisionRule.id)
+                    }
+
+                    container.integers.write(2, scoreboardInfo.color.ordinal)
+                } else {
+
+                    if (is1_20_1Plus) {
+                        container.optionalTeamParameters.write(0, Optional.of(WrappedTeamParameters.newBuilder()
+                            .displayName(convertedDisplay)
+                            .prefix(convertedPrefix)
+                            .suffix(convertedSuffix)
+                            .collisionRule(scoreboardInfo.collisionRule.id)
+                            .options(scoreboardInfo.optionData.ordinal)
+                            .nametagVisibility(scoreboardInfo.tagVisibility.id)
+                            .color(EnumWrappers.ChatFormatting.entries[scoreboardInfo.color.ordinal])
+                            .build()
+                        ))
+                    } else {
+                        val struct = if (is1_17Plus) container.optionalStructures.readSafely(0).get() else container
+
+                        struct.chatComponents.write(0, convertedDisplay)
+                        struct.chatComponents.write(1, convertedPrefix)
+                        struct.chatComponents.write(2, convertedSuffix)
+
+                        struct.integers.write(if (is1_17Plus) 0 else 1, scoreboardInfo.optionData.ordinal)
+                        struct.strings.write(
+                            if (is1_17Plus) 0 else 1,
+                            scoreboardInfo.tagVisibility.id
+                        )
+                        struct.strings.write(
+                            if (is1_17Plus) 1 else 2,
+                            scoreboardInfo.collisionRule.id
+                        )
+
+                        struct.getEnumModifier(
+                            ChatColor::class.java,
+                            MinecraftReflection.getMinecraftClass("EnumChatFormat")
+                        ).write(0, ChatColor.entries[scoreboardInfo.color.ordinal])
+
+                        if (is1_17Plus) {
+                            container.optionalStructures.write(0, Optional.of(struct as InternalStructure))
+                        }
+                    }
+                }
+            }
+
+            if (mode == TeamMode.CREATE || mode == TeamMode.ADD_ENTITIES || mode == TeamMode.REMOVE_ENTITIES) {
+                container.getSpecificModifier(Collection::class.java).write(0, players.take(40))
             }
 
             // send the packet without notifying any bound packet listeners

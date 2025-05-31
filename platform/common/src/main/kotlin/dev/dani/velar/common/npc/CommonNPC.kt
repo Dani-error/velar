@@ -8,9 +8,8 @@ import dev.dani.velar.api.util.Position
 import dev.dani.velar.api.flag.NPCFlag
 import dev.dani.velar.api.profile.Profile
 import dev.dani.velar.api.protocol.NPCSpecificOutboundPacket
-import dev.dani.velar.api.protocol.enums.EntityAnimation
-import dev.dani.velar.api.protocol.enums.ItemSlot
-import dev.dani.velar.api.protocol.enums.PlayerInfoAction
+import dev.dani.velar.api.protocol.TeamInfo
+import dev.dani.velar.api.protocol.enums.*
 import dev.dani.velar.api.protocol.meta.EntityMetadataFactory
 import dev.dani.velar.api.settings.NPCSettings
 import dev.dani.velar.api.util.safeEquals
@@ -107,6 +106,15 @@ class CommonNPC<W, P, I, E>(
             platform.packetFactory.createPlayerInfoPacket(PlayerInfoAction.ADD_PLAYER).schedule(player, this)
             platform.taskManager.scheduleDelayedAsync(10) {
                 platform.packetFactory.createEntitySpawnPacket().schedule(player, this)
+
+                if (flagValueOrDefault(NPC.HIDE_NAME_TAG) == true) {
+                    // schedule create team packet for hiding name tag
+                    this.platform.packetFactory.createTeamsPacket(TeamMode.CREATE, teamName(), TeamInfo(
+                        tagVisibility = NameTagVisibility.NEVER
+                    ), listOf(profile.name) )
+                        .schedule(player, this)
+                }
+
                 platform.eventManager.post(DefaultShowNPCEvent.post(this, player))
             }
         }
@@ -132,6 +140,9 @@ class CommonNPC<W, P, I, E>(
             this.platform.packetFactory.createEntityRemovePacket().schedule(player, this)
             this.platform.packetFactory.createPlayerInfoPacket(PlayerInfoAction.REMOVE_PLAYER).schedule(player, this)
 
+            // schedule a teams remove (in case its name tag was hidden)
+            this.platform.packetFactory.createTeamsPacket(TeamMode.REMOVE, teamName()).schedule(player, this)
+
             // post the finish of the removal to all plugins
             this.platform.eventManager.post(DefaultHideNPCEvent.post(this, player))
         }
@@ -139,6 +150,8 @@ class CommonNPC<W, P, I, E>(
         // for chaining
         return this
     }
+
+    private fun teamName() = profile.uniqueId.toString().substring(0, 15)
 
     override fun rotate(yaw: Float, pitch: Float): NPCSpecificOutboundPacket<W, P, I, E> =
         this.platform.packetFactory.createRotationPacket(yaw, pitch).toSpecific(this)

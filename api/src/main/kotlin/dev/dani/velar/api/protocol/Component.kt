@@ -27,6 +27,8 @@ interface Component {
             return DefaultComponent(rawMessage, jsonEncodedMessage)
         }
 
+        fun empty() = ofRawMessage("")
+
     }
 
 }

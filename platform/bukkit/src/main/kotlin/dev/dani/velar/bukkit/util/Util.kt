@@ -2,15 +2,15 @@
 
 package dev.dani.velar.bukkit.util
 
+import com.comphenix.protocol.wrappers.WrappedChatComponent
 import dev.dani.velar.api.NPC
 import dev.dani.velar.api.NPC.Builder
 import dev.dani.velar.api.event.NPCEvent
 import dev.dani.velar.api.event.PlayerNPCEvent
 import dev.dani.velar.api.settings.NPCProfileResolver
-import dev.dani.velar.api.util.Position
-import dev.dani.velar.bukkit.BukkitWorldAccessor.LegacyAccessor
-import dev.dani.velar.bukkit.BukkitWorldAccessor.ModernAccessor
 import io.papermc.lib.PaperLib
+import net.md_5.bungee.api.chat.BaseComponent
+import net.md_5.bungee.chat.ComponentSerializer
 import org.bukkit.Location
 import org.bukkit.World
 import org.bukkit.entity.Player
@@ -51,4 +51,11 @@ fun <W, P, I, E> Builder<W, P, I, E>.position(location: Location): Builder<W, P,
     })
 
     return this
+}
+
+
+fun WrappedChatComponent.toLegacy(): String {
+    val json = this.json
+    val components: Array<BaseComponent> = ComponentSerializer.parse(json)
+    return components.joinToString("") { it.toLegacyText() }
 }

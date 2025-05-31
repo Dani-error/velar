@@ -4,6 +4,7 @@ import dev.dani.velar.api.platform.Platform
 import dev.dani.velar.api.protocol.enums.EntityAnimation
 import dev.dani.velar.api.protocol.enums.ItemSlot
 import dev.dani.velar.api.protocol.enums.PlayerInfoAction
+import dev.dani.velar.api.protocol.enums.TeamMode
 import dev.dani.velar.api.protocol.meta.EntityMetadataFactory
 
 
@@ -31,6 +32,8 @@ interface PlatformPacketAdapter<W, P, I, E> {
     fun <T, O> createEntityMetaPacket(
         metadata: EntityMetadataFactory<T, O>, value: T
     ): OutboundPacket<W, P, I, E>
+
+    fun createTeamsPacket(mode: TeamMode, teamName: String, info: TeamInfo? = null, players: List<String> = emptyList()): OutboundPacket<W, P, I, E>
 
     fun initialize(platform: Platform<W, P, I, E>)
 
