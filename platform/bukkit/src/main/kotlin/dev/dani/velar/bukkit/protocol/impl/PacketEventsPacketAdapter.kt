@@ -413,7 +413,8 @@ object PacketEventsPacketAdapter : PlatformPacketAdapter<World, Player, ItemStac
                 EntityPose.DIGGING to com.github.retrooper.packetevents.protocol.entity.pose.EntityPose.DIGGING,
                 EntityPose.SLIDING to com.github.retrooper.packetevents.protocol.entity.pose.EntityPose.SLIDING,
                 EntityPose.SHOOTING to com.github.retrooper.packetevents.protocol.entity.pose.EntityPose.SHOOTING,
-                EntityPose.INHALING to com.github.retrooper.packetevents.protocol.entity.pose.EntityPose.INHALING
+                EntityPose.INHALING to com.github.retrooper.packetevents.protocol.entity.pose.EntityPose.INHALING,
+                EntityPose.SITTING to com.github.retrooper.packetevents.protocol.entity.pose.EntityPose.SITTING
             )
         }
 

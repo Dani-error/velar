@@ -286,7 +286,7 @@ object ProtocolLibPacketAdapter : PlatformPacketAdapter<World, Player, ItemStack
     override fun createPlayerInfoPacket(
         action: PlayerInfoAction
     ): OutboundPacket<World, Player, ItemStack, Plugin> {
-        return OutboundPacket<World, Player, ItemStack, Plugin> { player: Player, npc: NPC<World, Player, ItemStack, Plugin> ->
+        return OutboundPacket { player: Player, npc: NPC<World, Player, ItemStack, Plugin> ->
             npc.settings.profileResolver.resolveNPCProfile(player, npc).thenAcceptAsync { profile ->
                 // since 1.19.3 removing of players is handled in a separate packet
                 if (action === PlayerInfoAction.REMOVE_PLAYER && MinecraftVersion.FEATURE_PREVIEW_UPDATE.atOrAbove()) {
