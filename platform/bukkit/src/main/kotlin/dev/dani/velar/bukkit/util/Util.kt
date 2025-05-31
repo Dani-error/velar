@@ -7,6 +7,7 @@ import dev.dani.velar.api.NPC
 import dev.dani.velar.api.NPC.Builder
 import dev.dani.velar.api.event.NPCEvent
 import dev.dani.velar.api.event.PlayerNPCEvent
+import dev.dani.velar.api.protocol.NPCSpecificOutboundPacket
 import dev.dani.velar.api.settings.NPCProfileResolver
 import io.papermc.lib.PaperLib
 import net.md_5.bungee.api.chat.BaseComponent
@@ -52,6 +53,15 @@ fun <W, P, I, E> Builder<W, P, I, E>.position(location: Location): Builder<W, P,
 
     return this
 }
+
+fun <W, P, I, E> NPC<W, P, I, E>.lookAt(location: Location): NPCSpecificOutboundPacket<W, P, I, E> {
+    return this.lookAt(if (PaperLib.isPaper() && PaperLib.isVersion(16, 5)) {
+        BukkitPlatformUtil.positionFromBukkitModern(location)
+    } else {
+        BukkitPlatformUtil.positionFromBukkitLegacy(location)
+    })
+}
+
 
 
 fun WrappedChatComponent.toLegacy(): String {

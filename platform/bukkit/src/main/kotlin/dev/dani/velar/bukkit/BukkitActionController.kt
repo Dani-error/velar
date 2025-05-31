@@ -1,13 +1,14 @@
 package dev.dani.velar.bukkit
 
-import dev.dani.velar.api.*
 import dev.dani.velar.api.NPC.Companion.HIT_WHEN_PLAYER_HITS
 import dev.dani.velar.api.NPC.Companion.LOOK_AT_PLAYER
 import dev.dani.velar.api.NPC.Companion.SNEAK_WHEN_PLAYER_SNEAKS
+import dev.dani.velar.api.NPCActionController
 import dev.dani.velar.api.NPCActionController.Companion.AUTO_SYNC_POSITION_ON_SPAWN
 import dev.dani.velar.api.NPCActionController.Companion.IMITATE_DISTANCE
 import dev.dani.velar.api.NPCActionController.Companion.SPAWN_DISTANCE
 import dev.dani.velar.api.NPCActionController.Companion.TAB_REMOVAL_TICKS
+import dev.dani.velar.api.NPCTracker
 import dev.dani.velar.api.event.NPCEventManager
 import dev.dani.velar.api.event.ShowNPCEvent
 import dev.dani.velar.api.flag.NPCFlag
@@ -17,9 +18,9 @@ import dev.dani.velar.api.protocol.enums.PlayerInfoAction
 import dev.dani.velar.api.protocol.meta.EntityMetadataFactory
 import dev.dani.velar.api.util.Position
 import dev.dani.velar.bukkit.util.BukkitPlatformUtil.distance
-import dev.dani.velar.bukkit.util.BukkitPlatformUtil.positionFromBukkitLegacy
 import dev.dani.velar.bukkit.util.bukkitNPC
 import dev.dani.velar.bukkit.util.bukkitPlayer
+import dev.dani.velar.bukkit.util.lookAt
 import dev.dani.velar.common.CommonNPCActionController
 import dev.dani.velar.common.flag.CommonNPCFlaggedBuilder
 import org.bukkit.Location
@@ -95,7 +96,7 @@ class BukkitActionController(
 
                 val distance = distance(npc, to)
                 if (distance <= this.imitateDistance && npc.flagValueOrDefault(LOOK_AT_PLAYER) == true) {
-                    npc.lookAt(positionFromBukkitLegacy(to)).schedule(player)
+                    npc.lookAt(to).schedule(player)
                 }
             }
         }
@@ -138,7 +139,7 @@ class BukkitActionController(
                     && npc.tracksPlayer(player)
                     && distance <= this.imitateDistance && npc.flagValueOrDefault(LOOK_AT_PLAYER) == true
                 ) {
-                    npc.lookAt(positionFromBukkitLegacy(to)).schedule(player)
+                    npc.lookAt(to).schedule(player)
                 }
             }
         }
