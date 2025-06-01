@@ -31,7 +31,7 @@
   }
 
   dependencies {
-      implementation("io.github.dani-error.velar:<module>:1.0.0")
+      implementation("io.github.dani-error.velar:<module>:1.1.0")
   }
   ```
 
@@ -45,7 +45,7 @@ _Replace `<module>` with one of the modules listed below._
   <dependency>
     <groupId>io.github.dani-error.velar</groupId>
     <artifactId>MODULE</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
   </dependency>
   ```
 
@@ -61,7 +61,7 @@ _Replace `<module>` with one of the modules listed below._
   }
 
   dependencies {
-      implementation 'io.github.dani-error.velar:<module>:1.0.0'
+      implementation 'io.github.dani-error.velar:<module>:1.1.0'
   }
   ```
 
