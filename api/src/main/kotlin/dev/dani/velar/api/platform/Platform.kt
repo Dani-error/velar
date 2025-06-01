@@ -51,7 +51,7 @@ interface Platform<W, P, I, E> {
 
         fun packetFactory(packetFactory: PlatformPacketAdapter<W, P, I, E>): Builder<W, P, I, E>
 
-        fun actionController(decorator: (NPCActionController.Builder?) -> Unit): Builder<W, P, I, E>
+        fun actionController(decorator: (NPCActionController.Builder) -> Unit): Builder<W, P, I, E>
 
         fun build(): Platform<W, P, I, E>
     }

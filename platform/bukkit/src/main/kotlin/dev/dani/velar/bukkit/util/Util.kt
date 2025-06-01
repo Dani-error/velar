@@ -7,6 +7,8 @@ import dev.dani.velar.api.NPC
 import dev.dani.velar.api.NPC.Builder
 import dev.dani.velar.api.event.NPCEvent
 import dev.dani.velar.api.event.PlayerNPCEvent
+import dev.dani.velar.api.platform.Platform
+import dev.dani.velar.api.platform.log.PlatformLogger
 import dev.dani.velar.api.protocol.NPCSpecificOutboundPacket
 import dev.dani.velar.api.settings.NPCProfileResolver
 import io.papermc.lib.PaperLib
@@ -18,6 +20,7 @@ import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.Plugin
 import java.util.*
+import java.util.logging.Logger
 
 
 /*
@@ -69,3 +72,6 @@ fun WrappedChatComponent.toLegacy(): String {
     val components: Array<BaseComponent> = ComponentSerializer.parse(json)
     return components.joinToString("") { it.toLegacyText() }
 }
+
+fun <W, P, I, E> Platform.Builder<W, P, I, E>.logger(logger: Logger): Platform.Builder<W, P, I, E> =
+    this.logger(PlatformLogger.fromJul(logger))

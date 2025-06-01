@@ -29,7 +29,7 @@ abstract class CommonPlatformBuilder<W, P, I, E> : Platform.Builder<W, P, I, E> 
     protected var versionAccessor: PlatformVersionAccessor? = null
     protected var worldAccessor: PlatformWorldAccessor<W>? = null
     protected var packetAdapter: PlatformPacketAdapter<W, P, I, E>? = null
-    protected var actionControllerDecorator: ((NPCActionController.Builder?) -> Unit)? = null
+    protected var actionControllerDecorator: ((NPCActionController.Builder) -> Unit)? = null
 
     override fun debug(debug: Boolean): Platform.Builder<W, P, I, E> {
         this.debug = debug
@@ -82,7 +82,7 @@ abstract class CommonPlatformBuilder<W, P, I, E> : Platform.Builder<W, P, I, E> 
     }
 
     override fun actionController(
-        decorator: (NPCActionController.Builder?) -> Unit
+        decorator: (NPCActionController.Builder) -> Unit
     ): CommonPlatformBuilder<W, P, I, E> {
         this.actionControllerDecorator = decorator
         return this
