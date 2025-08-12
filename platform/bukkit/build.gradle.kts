@@ -30,5 +30,5 @@ dependencies {
 
     compileOnly("com.github.dmulloy2:ProtocolLib:2c0d632dc2")
 
-    compileOnly("io.papermc.paper:paper-api:1.21.5-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.18.1-R0.1-SNAPSHOT")
 }
